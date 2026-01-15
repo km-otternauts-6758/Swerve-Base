@@ -41,35 +41,6 @@ class DrivetrainPoseTelemetry:
 
         self.autoDriveGoalPose = Pose2d()
 
-        self.leftFrontCamPosePublisher = (
-            NetworkTableInstance.getDefault()
-            .getStructTopic("/LeftFrontCamPose", Pose3d)
-            .publish()
-        )
-        self.rightFrontCamPosePublisher = (
-            NetworkTableInstance.getDefault()
-            .getStructTopic("/RightFrontCamPose", Pose3d)
-            .publish()
-        )
-        self.leftBackCamPosePublisher = (
-            NetworkTableInstance.getDefault()
-            .getStructTopic("/LeftBackCamPose", Pose3d)
-            .publish()
-        )
-        self.rightBackCamPosePublisher = (
-            NetworkTableInstance.getDefault()
-            .getStructTopic("/RightBackCamPose", Pose3d)
-            .publish()
-        )
-        self.frontCamPosePublisher = (
-            NetworkTableInstance.getDefault()
-            .getStructTopic("/FrontCamPose", Pose3d)
-            .publish()
-        )
-
-        self.visionPoses = []
-        self.modulePoses = []
-
     def setDesiredPose(self, desPose):
         self.desPose = desPose
 
@@ -137,21 +108,6 @@ class DrivetrainPoseTelemetry:
         self.visionPoses = []
 
         self.field.getObject("autoDriveGoalPose").setPose(self.autoDriveGoalPose)
-
-        self.leftFrontCamPosePublisher.set(
-            Pose3d(estPose).transformBy(ROBOT_TO_LEFTFRONT_CAM)
-        )
-        self.rightFrontCamPosePublisher.set(
-            Pose3d(estPose).transformBy(ROBOT_TO_RIGHTFRONT_CAM)
-        )
-        self.leftBackCamPosePublisher.set(
-            Pose3d(estPose).transformBy(ROBOT_TO_LEFTBACK_CAM)
-        )
-        self.rightBackCamPosePublisher.set(
-            Pose3d(estPose).transformBy(ROBOT_TO_RIGHTBACK_CAM)
-        )
-
-        self.frontCamPosePublisher.set(Pose3d(estPose).transformBy(ROBOT_TO_FRONT_CAM))
 
     def setCurAutoTrajectory(self, trajIn):
         """Display a specific trajectory on the robot Field2d

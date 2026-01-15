@@ -12,7 +12,6 @@ from utils.signalLogging import addLog
 from wpimath import applyDeadband
 from wpimath.filter import SlewRateLimiter
 from wpilib import XboxController
-from subsystems.Components import Shoulder, Wrist, Elevator, Intake
 import enum
 
 kElevatorButton = 0
@@ -126,26 +125,3 @@ class DriverInterface:
 
     def getAutoSteer(self) -> bool:
         return self.autoSteer
-
-    # def getAutoDrive(self) -> bool:
-    #     return self.autoDrive
-
-    # def getGyroResetCmd(self) -> bool:
-    #     return self.gyroResetCmd
-
-    # def getCreateObstacle(self) -> bool:
-    #     return self.createDebugObstacle
-
-    # def getElevator(self) -> ElevatorButton:
-    #     if (
-    #         316 < self.ctrl.getPOV(kElevatorButton) < 359
-    #         and 0 < self.ctrl.getPOV(kElevatorButton) < 45
-    #     ):
-    #         return ElevatorButton.L1
-    #     elif 46 < self.ctrl.getPOV(kElevatorButton) < 135:
-    #         return ElevatorButton.L2
-    #     elif 136 < self.ctrl.getPOV(kElevatorButton) < 225:
-    #         return ElevatorButton.L3
-    #     elif 226 < self.ctrl.getPOV(kElevatorButton) < 315:
-    #         return ElevatorButton.L4
-    #     return ElevatorButton.NONE

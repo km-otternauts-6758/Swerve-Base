@@ -8,5 +8,6 @@
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
   "python.testing.pytestArgs": ["tests"],
-  "cSpell.words": ["wpilib"]
+  "cSpell.words": ["wpilib"],
+  "makefile.configureOnOpen": false
 }

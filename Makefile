@@ -20,7 +20,7 @@ delete:
 	py -m robotpy undeploy
 
 commit:
-	git commit -asm "Computer Broke Unfunny"
+	git commit -asm "Swerve Base Stuff"
 	
 push:
 	git push origin main

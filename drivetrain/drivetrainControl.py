@@ -1,6 +1,5 @@
 from wpimath.kinematics import ChassisSpeeds
 from wpimath.geometry import Pose2d, Rotation2d
-from Autonomous.commands.driveForwardSlowCommand import DriveForwardSlowCommand
 from drivetrain.poseEstimation.drivetrainPoseEstimator import DrivetrainPoseEstimator
 from drivetrain.swerveModuleControl import SwerveModuleControl
 from drivetrain.swerveModuleGainSet import SwerveModuleGainSet
@@ -176,7 +175,7 @@ class DrivetrainControl(metaclass=Singleton):
         # but aligned facing downfield
         curTranslation = self.poseEst.getCurEstPose().translation()
         newGyroRotation = (
-            Rotation2d.fromDegrees(180.0) if (onRed()) else Rotation2d.fromDegrees(0.0)
+            Rotation2d.fromDegrees(0.0) if (onRed()) else Rotation2d.fromDegrees(180.0)
         )
         newPose = Pose2d(curTranslation, newGyroRotation)
         self.poseEst.setKnownPose(newPose)

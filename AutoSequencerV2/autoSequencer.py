@@ -4,10 +4,6 @@ from AutoSequencerV2.modeList import ModeList
 from AutoSequencerV2.builtInModes.doNothingMode import DoNothingMode
 from AutoSequencerV2.builtInModes.waitMode import WaitMode
 from AutoSequencerV2.sequentialCommandGroup import SequentialCommandGroup
-from Autonomous.modes.driveOut import DriveOut
-from Autonomous.modes.testPath import testPath
-from Autonomous.modes.driveTest1 import driveTest1
-from Autonomous.modes.brady import Brady
 from utils.singleton import Singleton
 from utils.allianceTransformUtils import onRed
 
@@ -27,10 +23,9 @@ class AutoSequencer(metaclass=Singleton):
         self.mainModeList = ModeList("Main")
         self.mainModeList.addMode(DoNothingMode())
         # right now, DriveOut is all commented out, so we don't need to add it to the list.
-        self.mainModeList.addMode(DriveOut())
-        self.mainModeList.addMode(driveTest1())
-        self.mainModeList.addMode(testPath())
-        self.mainModeList.addMode(Brady())
+        # self.mainModeList.addMode(DriveOut())
+        # self.mainModeList.addMode(driveTest1())
+        # self.mainModeList.addMode(testPath())
         self.topLevelCmdGroup = SequentialCommandGroup()
         self.startPose = Pose2d()
 

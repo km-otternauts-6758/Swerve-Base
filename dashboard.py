@@ -14,12 +14,19 @@ class Dashboard:
     def __init__(self):
         webServer = Webserver()
 
-        webServer.addDashboardWidget(ReefIndicator(15, 15, "/SmartDashboard/reefGoalPosIdx"))
+        webServer.addDashboardWidget(
+            ReefIndicator(15, 15, "/SmartDashboard/reefGoalPosIdx")
+        )
 
-
-        webServer.addDashboardWidget(Icon(45, 45, "/SmartDashboard/isRedIconState", "#FF0000", "allianceRed"))
-        webServer.addDashboardWidget(Icon(55, 45, "/SmartDashboard/isBlueIconState", "#0000FF", "allianceBlue"))
-        webServer.addDashboardWidget(Icon(65, 45, "/SmartDashboard/PE Vision Targets Seen", "#00FF00", "vision"))
+        webServer.addDashboardWidget(
+            Icon(45, 45, "/SmartDashboard/isRedIconState", "#FF0000", "allianceRed")
+        )
+        webServer.addDashboardWidget(
+            Icon(55, 45, "/SmartDashboard/isBlueIconState", "#0000FF", "allianceBlue")
+        )
+        webServer.addDashboardWidget(
+            Icon(65, 45, "/SmartDashboard/PE Vision Targets Seen", "#00FF00", "vision")
+        )
 
         webServer.addDashboardWidget(Text(50, 75, "/SmartDashboard/faultDescription"))
         webServer.addDashboardWidget(SwerveState(85, 15))
@@ -41,26 +48,33 @@ class Dashboard:
         )
 
         # Add logging for things that don't come from anywhere else
-        addLog("isRedIconState",  
-               lambda: (
-            Icon.kON if wpilib.DriverStation.getAlliance() == wpilib.DriverStation.Alliance.kRed 
-            else Icon.kOFF)
-        )
-
-        addLog("isBlueIconState", 
+        addLog(
+            "isRedIconState",
             lambda: (
-            Icon.kON if wpilib.DriverStation.getAlliance() == wpilib.DriverStation.Alliance.kBlue 
-            else Icon.kOFF)
+                Icon.kON
+                if wpilib.DriverStation.getAlliance()
+                == wpilib.DriverStation.Alliance.kRed
+                else Icon.kOFF
+            ),
         )
 
-        addLog("faultIconState",
-                lambda: (Icon.kBLINK_FAST if FaultWrangler().hasActiveFaults() else Icon.kOFF)
+        addLog(
+            "isBlueIconState",
+            lambda: (
+                Icon.kON
+                if wpilib.DriverStation.getAlliance()
+                == wpilib.DriverStation.Alliance.kBlue
+                else Icon.kOFF
+            ),
+        )
+
+        addLog(
+            "faultIconState",
+            lambda: (
+                Icon.kBLINK_FAST if FaultWrangler().hasActiveFaults() else Icon.kOFF
+            ),
         )
 
         # Test Only.
         # TODO: Real data
-        addLog("reefGoalPosIdx",
-                lambda: 2
-        )
-
-
+        addLog("reefGoalPosIdx", lambda: 2)
