@@ -1,4 +1,15 @@
-from rev import SparkMax, SparkBase, SparkMaxConfig, REVLibError, ClosedLoopSlot, SparkBaseConfig, ClosedLoopConfig, SparkClosedLoopController
+from rev import (
+    SparkMax,
+    SparkBase,
+    SparkMaxConfig,
+    REVLibError,
+    ClosedLoopSlot,
+    PersistMode,
+    ResetMode,
+    SparkBaseConfig,
+    ClosedLoopConfig,
+    SparkClosedLoopController,
+)
 from wpilib import TimedRobot
 from utils.signalLogging import addLog
 from utils.units import rev2Rad, rad2Rev, radPerSec2RPM, RPM2RadPerSec
@@ -34,7 +45,11 @@ class WrapperedSparkMax:
         self.cfg.signals.busVoltagePeriodMs(200)
         self.cfg.signals.primaryEncoderPositionPeriodMs(20)
         self.cfg.signals.primaryEncoderVelocityPeriodMs(200)
-        self.cfg.setIdleMode(SparkBaseConfig.IdleMode.kBrake if brakeMode else SparkBaseConfig.IdleMode.kCoast)
+        self.cfg.setIdleMode(
+            SparkBaseConfig.IdleMode.kBrake
+            if brakeMode
+            else SparkBaseConfig.IdleMode.kCoast
+        )
         self.cfg.smartCurrentLimit(round(currentLimitA))
 
         # Perform motor configuration, tracking errors and retrying until we have success
@@ -42,9 +57,11 @@ class WrapperedSparkMax:
         retryCounter = 0
         while not self.configSuccess and retryCounter < 10:
             retryCounter += 1
-            err = self.ctrl.configure(self.cfg, 
-                                      SparkBase.ResetMode.kResetSafeParameters, 
-                                      SparkBase.PersistMode.kPersistParameters)
+            err = self.ctrl.configure(
+                self.cfg,
+                ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters,
+            )
 
             # Check if any operation triggered an error
             if err != REVLibError.kOk:
@@ -56,7 +73,7 @@ class WrapperedSparkMax:
                 # Only attempt other communication if we're able to successfully configure
                 self.configSuccess = True
             time.sleep(0.1)
-        
+
         self.disconFault.set(not self.configSuccess)
 
         addLog(self.name + "_outputCurrent", self.ctrl.getOutputCurrent, "A")
@@ -66,15 +83,16 @@ class WrapperedSparkMax:
         addLog(self.name + "_actPos", lambda: self.actPos, "rad")
         addLog(self.name + "_actVel", lambda: self.actVel, "RPM")
 
-
     def setInverted(self, isInverted):
         if self.configSuccess:
             self.cfg.inverted(isInverted)
-            self.ctrl.configure(self.cfg,
-                                SparkBase.ResetMode.kNoResetSafeParameters, 
-                                SparkBase.PersistMode.kPersistParameters)
+            self.ctrl.configure(
+                self.cfg,
+                ResetMode.kNoResetSafeParameters,
+                PersistMode.kPersistParameters,
+            )
 
-    def setPID(self, kP, kI, kD, persist=SparkBase.PersistMode.kPersistParameters):
+    def setPID(self, kP, kI, kD, persist=PersistMode.kPersistParameters):
         if self.configSuccess:
             self.cfg.closedLoop.pid(kP, kI, kD, ClosedLoopSlot.kSlot0)
             # Apply new configuration
@@ -83,10 +101,8 @@ class WrapperedSparkMax:
             # By default we persist setings (usually we set PID once, then don't think about it again)
             # However, if setPID is getting called in a periodic loop, don't bother persisting the parameters
             # because the persist operation takes a long time on the spark max.
-            self.ctrl.configure(self.cfg, 
-                                SparkBase.ResetMode.kNoResetSafeParameters, 
-                                persist)
-            
+            self.ctrl.configure(self.cfg, ResetMode.kNoResetSafeParameters, persist)
+
     def setPosCmd(self, posCmd, arbFF=0.0):
         """_summary_
 
@@ -110,8 +126,6 @@ class WrapperedSparkMax:
             )
 
             self.disconFault.set(err != REVLibError.kOk)
-
-
 
     def setVelCmd(self, velCmd, arbFF=0.0):
         """_summary_
@@ -140,7 +154,7 @@ class WrapperedSparkMax:
             self.ctrl.setVoltage(outputVoltageVolts)
 
     def getMotorPositionRad(self):
-        if(TimedRobot.isSimulation()):
+        if TimedRobot.isSimulation():
             pos = self.simActPos
         else:
             if self.configSuccess:

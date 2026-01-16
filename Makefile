@@ -20,7 +20,7 @@ delete:
 	py -m robotpy undeploy
 
 commit:
-	git commit -asm "Swerve Base Stuff"
+	git commit -asm "Final Touches"
 	
 push:
 	git push origin main

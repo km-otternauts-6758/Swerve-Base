@@ -14,7 +14,8 @@ from drivetrain.drivetrainPhysical import (
 from drivetrain.poseEstimation.drivetrainPoseTelemetry import DrivetrainPoseTelemetry
 from utils.faults import Fault
 from utils.signalLogging import addLog
-from wrappers.wrapperedPoseEstPhotonCamera import WrapperedPoseEstPhotonCamera
+
+# from wrappers.wrapperedPoseEstPhotonCamera import WrapperedPoseEstPhotonCamera
 from wpimath.kinematics import SwerveModulePosition, SwerveModuleState
 
 # Convienent abreviations for the types that we'll be passing around here.
@@ -52,12 +53,12 @@ class DrivetrainPoseEstimator:
         # Cameras - measure our position on the field from apriltags
         # Generally accurate, but slow and laggy. Might need to be disabled
         # if the robot isn't flat on the ground for some reason.
-        self.cams = [
-            WrapperedPoseEstPhotonCamera("ACAM4", ROBOT_TO_LEFTFRONT_CAM),
-            WrapperedPoseEstPhotonCamera("ACAM1", ROBOT_TO_RIGHTFRONT_CAM),
-            WrapperedPoseEstPhotonCamera("_ACAM3", ROBOT_TO_LEFTBACK_CAM),
-            WrapperedPoseEstPhotonCamera("ACAM2", ROBOT_TO_RIGHTBACK_CAM),
-        ]
+        # self.cams = [
+        #     WrapperedPoseEstPhotonCamera("ACAM4", ROBOT_TO_LEFTFRONT_CAM),
+        #     WrapperedPoseEstPhotonCamera("ACAM1", ROBOT_TO_RIGHTFRONT_CAM),
+        #     WrapperedPoseEstPhotonCamera("_ACAM3", ROBOT_TO_LEFTBACK_CAM),
+        #     WrapperedPoseEstPhotonCamera("ACAM2", ROBOT_TO_RIGHTBACK_CAM),
+        # ]
         self._camTargetsVisible = False
         self._useAprilTags = True
 
@@ -104,22 +105,22 @@ class DrivetrainPoseEstimator:
         # Add any vision observations to the pose estimate
         self._camTargetsVisible = False
 
-        if self._useAprilTags:
-            for cam in self.cams:
-                cam.update(self._curEstPose)
-                observations = cam.getPoseEstimates()
-                for observation in observations:
-                    self._poseEst.addVisionMeasurement(
-                        observation.estFieldPose,
-                        observation.time,
-                        (
-                            observation.xyStdDev,
-                            observation.xyStdDev,
-                            observation.rotStdDev,
-                        ),
-                    )
-                    self._camTargetsVisible = True
-                self._telemetry.addVisionObservations(observations)
+        # if self._useAprilTags:
+        #     for cam in self.cams:
+        #         cam.update(self._curEstPose)
+        #         observations = cam.getPoseEstimates()
+        #         for observation in observations:
+        #             self._poseEst.addVisionMeasurement(
+        #                 observation.estFieldPose,
+        #                 observation.time,
+        #                 (
+        #                     observation.xyStdDev,
+        #                     observation.xyStdDev,
+        #                     observation.rotStdDev,
+        #                 ),
+        #             )
+        #             self._camTargetsVisible = True
+        # self._telemetry.addVisionObservations(observations)
 
         # Read the gyro angle
         self._gyroDisconFault.set(not self._gyro.isConnected())

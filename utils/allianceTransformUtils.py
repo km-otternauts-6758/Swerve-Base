@@ -16,9 +16,8 @@ from utils.constants import FIELD_X_M, FIELD_Y_M
 
 # Simple utility to check if we're on the red alliance (and therefor doing transformation is needed)
 def onRed():
-    return (
-        wpilib.DriverStation.getAlliance() == wpilib.DriverStation.Alliance.kRed
-    )
+    return wpilib.DriverStation.getAlliance() == wpilib.DriverStation.Alliance.kRed
+
 
 # Base transform for X axis to flip to the other side of the field.
 def transformX(xIn):
@@ -26,7 +25,8 @@ def transformX(xIn):
         return FIELD_X_M - xIn
     else:
         return xIn
-    
+
+
 # Base transform for X axis to flip to the other side of the field.
 def transformY(yIn):
     if onRed():
@@ -39,23 +39,28 @@ def transformY(yIn):
 
 # Other types are flipped in the transform function
 
+
 # The following typehints remove vscode errors by telling the linter
 # exactly how the transform() function handles different types
 @overload
 def transform(valIn: None) -> None:
     pass
 
+
 @overload
 def transform(valIn: Rotation2d) -> Rotation2d:
     pass
+
 
 @overload
 def transform(valIn: Translation2d) -> Translation2d:
     pass
 
+
 @overload
 def transform(valIn: Pose2d) -> Pose2d:
     pass
+
 
 @overload
 def transform(valIn: SwerveSample) -> SwerveSample:
@@ -64,9 +69,9 @@ def transform(valIn: SwerveSample) -> SwerveSample:
 
 # Actual implementation of the transform function
 def transform(valIn):
-    if(valIn is None):
+    if valIn is None:
         return None
-    
+
     elif isinstance(valIn, Rotation2d):
         if onRed():
             return Rotation2d.fromDegrees(180) + valIn
@@ -102,4 +107,6 @@ def transform(valIn):
             return valIn
 
     else:
-        raise TypeError(f"transform function received unknown type:{type(valIn).__name__}")
+        raise TypeError(
+            f"transform function received unknown type:{type(valIn).__name__}"
+        )

@@ -18,7 +18,8 @@ from drivetrain.drivetrainPhysical import (
     robotToModuleTranslations,
 )
 from utils.autonomousTransformUtils import flip
-from wrappers.wrapperedPoseEstPhotonCamera import CameraPoseObservation
+
+# from wrappers.wrapperedPoseEstPhotonCamera import CameraPoseObservation
 
 
 class DrivetrainPoseTelemetry:
@@ -47,10 +48,10 @@ class DrivetrainPoseTelemetry:
     def setCurAutoDriveWaypoints(self, waypoints: list[Pose2d]):
         self.curTrajWaypoints = waypoints
 
-    def addVisionObservations(self, observations: list[CameraPoseObservation]):
-        if len(observations) > 0:
-            for obs in observations:
-                self.visionPoses.append(obs.estFieldPose)
+    # def addVisionObservations(self, observations: list[CameraPoseObservation]):
+    #     if len(observations) > 0:
+    #         for obs in observations:
+    #             self.visionPoses.append(obs.estFieldPose)
 
     def setCurObstacles(self, obstacles):
         (
@@ -60,8 +61,8 @@ class DrivetrainPoseTelemetry:
             self.almostGoneObstacles,
         ) = obstacles
 
-    def clearVisionObservations(self):
-        self.visionPoses = []
+    # def clearVisionObservations(self):
+    #     self.visionPoses = []
 
     def setAutoDriveGoalPose(self, pose):
         if pose is not None:
@@ -104,8 +105,8 @@ class DrivetrainPoseTelemetry:
             [Pose2d(x, Rotation2d()) for x in self.almostGoneObstacles]
         )
 
-        self.field.getObject("visionObservations").setPoses(self.visionPoses)
-        self.visionPoses = []
+        # self.field.getObject("visionObservations").setPoses(self.visionPoses)
+        # self.visionPoses = []
 
         self.field.getObject("autoDriveGoalPose").setPose(self.autoDriveGoalPose)
 

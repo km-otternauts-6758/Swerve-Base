@@ -8,7 +8,7 @@ import json
 # These imports are mostly just to make sure we put versions on the webpage
 import wpilib
 import rev
-from photonlibpy import version
+
 
 from utils.extDriveManager import ExtDriveManager
 
@@ -25,11 +25,15 @@ with open(os.path.join(WEB_ROOT, "index.html_tmplt"), "r", encoding="utf-8") as 
     INDEX_TMPLT_TXT = infile.read()
 
 HTML_TMPLT_TXT = ""
-with open(os.path.join(DASHBOARD_ROOT, "dashboard.html_tmplt"), "r", encoding="utf-8") as infile:
+with open(
+    os.path.join(DASHBOARD_ROOT, "dashboard.html_tmplt"), "r", encoding="utf-8"
+) as infile:
     HTML_TMPLT_TXT = infile.read()
 
 JS_TMPLT_TXT = ""
-with open(os.path.join(DASHBOARD_ROOT, "dashboard.js_tmplt"), "r", encoding="utf-8") as infile:
+with open(
+    os.path.join(DASHBOARD_ROOT, "dashboard.js_tmplt"), "r", encoding="utf-8"
+) as infile:
     JS_TMPLT_TXT = infile.read()
 
 
@@ -84,7 +88,6 @@ class CasseroleWebServerImpl(SimpleHTTPRequestHandler):
         deployText += f"Python - {platform.python_version()} - {sys.executable} \n"
         deployText += f"WPILib - {wpilib.version.version} \n"
         deployText += f"REV - {rev.version.version} \n"
-        deployText += f"PhotonVision - {version.PHOTONLIB_VERSION} \n"
         deployText += f"Working Dir - {os.getcwd()}\n"
 
         filledOut = INDEX_TMPLT_TXT.replace("${BUILD_INFO}", deployText)

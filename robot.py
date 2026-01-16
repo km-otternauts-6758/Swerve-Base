@@ -4,7 +4,6 @@ from wpimath.geometry import Pose2d, Rotation2d
 from wpimath.controller import PIDController
 
 from AutoSequencerV2.autoSequencer import AutoSequencer
-from dashboard import Dashboard
 from drivetrain.controlStrategies.autoDrive import AutoDrive
 from drivetrain.controlStrategies.trajectory import Trajectory
 from drivetrain.drivetrainControl import DrivetrainControl
@@ -36,18 +35,6 @@ class MyRobot(wpilib.TimedRobot):
 
         #########################################################
 
-        self.drivePid = PIDController(2.5, 0, 0.02, 0.01)
-        self.drivePidX = PIDController(0.04, 0, 0.004, 0.01)
-        self.drivePidY = PIDController(0.08, 0, 0.008, 0.01)
-
-        self.AutodrivePid = PIDController(0.5, 0, 0.02, 0.01)
-        self.AutodrivePidX = PIDController(0.03, 0, 0.003, 0.01)
-        self.AutodrivePidY = PIDController(0.04, 0, 0.004, 0.01)
-
-        self.leftdrivePid = PIDController(1, 0, 0.02, 0.01)
-        self.leftdrivePidX = PIDController(0.03, 0, 0.003, 0.01)
-        self.leftdrivePidY = PIDController(0.04, 0, 0.004, 0.01)
-
         self.timer = wpilib.Timer()
 
         wpilib.CameraServer.launch()
@@ -72,8 +59,6 @@ class MyRobot(wpilib.TimedRobot):
         self.stick2 = wpilib.XboxController(1)
 
         self.autoSequencer = AutoSequencer()
-
-        self.dashboard = Dashboard()
 
         self.rioMonitor = RIOMonitor()
         self.pwrMon = PowerMonitor()

@@ -20,17 +20,17 @@ components = [
     # "phoenix5",
     # "phoenix6",
     # "playingwithfusion"
-    "rev",
+    #"",
     # "romi"
     # "sim"
 ]
 
 # Other pip packages to install
 requires = [
-    "photonlibpy",
     "debugpy==1.8.11",
     "numpy",
-    "phoenix6==25.2.1",
-    "sleipnirgroup-choreolib == 2025.0.1",
-    "pynetworktables"
+    "phoenix6==26.1.0",
+    "sleipnirgroup-choreolib == 2026.0.1",
+    "pynetworktables",
+    "robotpy-rev"
 ]
